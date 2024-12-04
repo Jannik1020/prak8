@@ -14,7 +14,7 @@ typedef struct {
 Currency data[] = {
 	#include "waehrung.dat"
 };
-
+/*
 int maxDigitAmount(Currency curr[], int buySell){ // buy 0 sell 1
 	int data_len = sizeof(data)/sizeof(Currency);
 
@@ -42,23 +42,24 @@ int digitAmount(double num) {
 	int digits = abs((int) num);
 	return (digits == 0)? 1 : 1+ log10(digits);
 }
+*/
 
 void printStringCol(int max_chars, char string[]) {
 	int whitespaces = max_chars - strlen(string);
 	printf(" %s%*c|", string, whitespaces, ' ');
 }
-
-void printNumCol(int max_digits, double num){
-	int whitespaces = max_digits - digitAmount(num);
-	printf("%*c%f |", whitespaces+1, ' ', num);
+void printNumCol(/*int max_digits,*/ double num){
+	//int whitespaces = max_digits - digitAmount(num);
+	//printf("%*c%f |", whitespaces+1, ' ', num);
+	printf("%10.6f |", num);
 }
 
-void printRow(Currency * row, int max_digits_buy, int max_digits_sell){
+void printRow(Currency * row/* , int max_digits_buy, int max_digits_sell */){
 	printStringCol(32, row->country_name);
 	printStringCol(4, row->country_code);
 	printStringCol(4, row->currency_code);
-	printNumCol(max_digits_buy, row->buy);
-	printNumCol(max_digits_sell, row->sell);
+	printNumCol(/*max_digits_buy,*/ row->buy);
+	printNumCol(/*max_digits_sell,*/ row->sell);
 	printf("\n");
 }
 
@@ -72,6 +73,6 @@ int main(){
 	qsort(data, data_len, sizeof(Currency), compareByCountryName);
 
 	for(int i = 0; i < data_len; i++) {
-		printRow(&data[i], maxDigitAmount(data, 0), maxDigitAmount(data, 1));
+		printRow(&data[i]/*, maxDigitAmount(data, 0), maxDigitAmount(data, 1)*/);
 	}
 }
